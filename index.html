@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>lab4 wordle</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="wordle.js">
+    </script>
+    <script src = 'random_word.js'>
+    </script>
+</head>
+<body id="body">
+    <h1 id="title">WORDLE LAB4</h1>
+    <h2 id="output"></h2>
+    <form id="wordle">
+        <input type="text" id="letter1" maxlength="1" class="square_input" required>
+        <input type="text" id="letter2" maxlength="1" class="square_input" required>
+        <input type="text" id="letter3" maxlength="1" class="square_input" required>
+        <input type="text" id="letter4" maxlength="1" class="square_input" required>
+        <input type="text" id="letter5" maxlength="1" class="square_input" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        let tries = 0;
+        let game_end = false;
+        const max_tries = 10;
+        const secret_word = get_random_word();
+        function wordle(event) {
+            event.preventDefault();
+            if (game_end) {
+                return;
+            }
+            let correct_word = true;
+            let output_str = ""
+            const letter1 = document.getElementById("letter1").value;
+            const letter2 = document.getElementById("letter2").value;
+            const letter3 = document.getElementById("letter3").value;
+            const letter4 = document.getElementById("letter4").value;
+            const letter5 = document.getElementById("letter5").value;
+            const wordle_word = letter1 + letter2 + letter3 + letter4 + letter5;
+            letter_colors = compare_words(secret_word, wordle_word)
+            for (let i = 0; i < letter_colors.length; i++) {
+                if (letter_colors[i] != 2) {
+                    correct_word = false;
+                }
+            }
+
+            for (let i = 0; i < letter_colors.length; i++) {
+                if (letter_colors[i] == 0) {
+                    document.getElementById("letter" + (i+1)).style.backgroundColor = "white";
+                } else if (letter_colors[i] == 1) {
+                    document.getElementById("letter" + (i+1)).style.backgroundColor = "yellow";
+                } else if (letter_colors[i] == 2) {
+                    document.getElementById("letter" + (i+1)).style.backgroundColor = "green";
+                }
+            }
+            let square_container = document.createElement("div");
+            square_container.classList.add("square_container");
+            for (let i =0; i < 5; i++) {
+                let square = document.createElement("div");
+                square.classList.add("square_input");
+                square.textContent = document.getElementById("letter" + (i+1)).value;
+                if (letter_colors[i] == 0) {
+                    square.style.backgroundColor = "white";
+                } else if (letter_colors[i] == 1) {
+                    square.style.backgroundColor = "yellow";
+                } else if (letter_colors[i] == 2) {
+                    square.style.backgroundColor = "green";
+                }
+                square.style.margin = "2px";
+                square_container.appendChild(square);
+            }
+            document.getElementById("wordle").insertAdjacentElement("beforebegin", square_container);
+            tries += 1;
+            output_str = "attempts: " + tries;
+            if (correct_word) {
+                document.getElementById("output").textContent = "You Won!";
+                game_end = true;
+                return;
+            }
+            if (tries > max_tries-1) {
+                document.getElementById("output").textContent = "You Lose! Correct Word is " + secret_word;
+                game_end = true;
+                return;
+            }
+            document.getElementById("output").textContent = output_str;
+        }
+        document.getElementById("wordle").addEventListener("submit", wordle);
+    </script>
+</body>
+</html>
