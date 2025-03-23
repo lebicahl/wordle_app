@@ -19,7 +19,7 @@
         <input type="text" id="letter3" maxlength="1" class="square_input" required>
         <input type="text" id="letter4" maxlength="1" class="square_input" required>
         <input type="text" id="letter5" maxlength="1" class="square_input" required>
-        <button type="submit">Submit</button>
+        <button type="submit" class = "button">Submit</button>
     </form>
 
     <script>
@@ -49,11 +49,11 @@
 
             for (let i = 0; i < letter_colors.length; i++) {
                 if (letter_colors[i] == 0) {
-                    document.getElementById("letter" + (i+1)).style.backgroundColor = "white";
+                    document.getElementById("letter" + (i+1)).style.backgroundColor = "#FFFFFF";
                 } else if (letter_colors[i] == 1) {
-                    document.getElementById("letter" + (i+1)).style.backgroundColor = "yellow";
+                    document.getElementById("letter" + (i+1)).style.backgroundColor = "#FFFF00";
                 } else if (letter_colors[i] == 2) {
-                    document.getElementById("letter" + (i+1)).style.backgroundColor = "green";
+                    document.getElementById("letter" + (i+1)).style.backgroundColor = "#00FF00";
                 }
             }
             let square_container = document.createElement("div");
