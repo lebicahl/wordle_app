@@ -39,23 +39,24 @@
             const letter3 = document.getElementById("letter3").value;
             const letter4 = document.getElementById("letter4").value;
             const letter5 = document.getElementById("letter5").value;
-            const wordle_word = letter1 + letter2 + letter3 + letter4 + letter5;
+            let wordle_word = letter1 + letter2 + letter3 + letter4 + letter5;
+            wordle_word = wordle_word.toLowerCase();
             letter_colors = compare_words(secret_word, wordle_word)
             for (let i = 0; i < letter_colors.length; i++) {
                 if (letter_colors[i] != 2) {
                     correct_word = false;
                 }
             }
-
+            /*
             for (let i = 0; i < letter_colors.length; i++) {
                 if (letter_colors[i] == 0) {
-                    document.getElementById("letter" + (i+1)).style.backgroundColor = "#FFFFFF";
+                    document.getElementById("letter" + (i+1)).style.backgroundColor = "white";
                 } else if (letter_colors[i] == 1) {
-                    document.getElementById("letter" + (i+1)).style.backgroundColor = "#FFFF00";
+                    document.getElementById("letter" + (i+1)).style.backgroundColor = "yellow";
                 } else if (letter_colors[i] == 2) {
-                    document.getElementById("letter" + (i+1)).style.backgroundColor = "#00FF00";
+                    document.getElementById("letter" + (i+1)).style.backgroundColor = "green";
                 }
-            }
+            }*/
             let square_container = document.createElement("div");
             square_container.classList.add("square_container");
             for (let i =0; i < 5; i++) {
@@ -72,6 +73,13 @@
                 square.style.margin = "2px";
                 square_container.appendChild(square);
             }
+
+            document.getElementById("letter1").value = null;
+            document.getElementById("letter2").value = null;
+            document.getElementById("letter3").value = null;
+            document.getElementById("letter4").value = null;
+            document.getElementById("letter5").value = null;
+
             document.getElementById("wordle").insertAdjacentElement("beforebegin", square_container);
             tries += 1;
             output_str = "attempts: " + tries;
